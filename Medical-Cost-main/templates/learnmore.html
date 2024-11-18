@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Cost Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" type="image/png" href="static/images/logo.png" sizes="32x32">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Overall font style and background */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #e8d0af; /* Soft cream background from second code */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Navigation bar styling */
+nav {
+    background-color: #e8d0af; /* Soft light color for navbar from second code */
+    color: #7c3088; /* Purple color for navbar text */
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #7c3088; /* Light color for logo text */
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #8c5ba5; /* Soft purple color for links */
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: #5e4f7e; /* Darker purple for hover */
+    color: black; /* Text turns black on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+/* Mobile menu toggle */
+.menu-toggle {
+    font-size: 24px;
+    cursor: pointer;
+    color: #f0e1d2;
+    display: none; /* Hidden on desktop */
+}
+
+/* Main content styling */
+.health-check {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+.health-check h1 {
+    color: #7c3088; /* Purple for title */
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+.status {
+    font-size: 1.2rem;
+    color: #5e4f7e; /* Darker purple for status text */
+    margin-bottom: 20px;
+}
+.status strong {
+    color: #571361; /* Deep purple for "healthy" status */
+}
+
+/* Button styling */
+.btn {
+    padding: 12px 24px;
+    background-color: #b061d6; /* Soft purple button color */
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+.btn:hover {
+    background-color: #9744e3; /* Darker purple on hover */
+}
+
+/* Footer styling */
+footer {
+    background: linear-gradient(135deg, #e8d0af, #c098dd);
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+    font-size: 14px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Hide links by default on mobile */
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    /* Show the links when menu is toggled */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block; /* Show toggle icon on mobile */
+    }
+
+    /* Content adjustments */
+    .health-check h1 {
+        font-size: 1.5rem;
+    }
+    .status {
+        font-size: 1rem;
+    }
+
+    /* Video resizing */
+    iframe {
+        width: 100%;
+        height: auto;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">Medical Cost Prediction<span>.</span></div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('predict') }}">Predict</a></li>
+            <li><a href="{{ url_for('aboutus_page') }}">Team</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content: API Status Section -->
+    <div class="health-check">
+        <h1>About Health insurance and medical cost prediction </h1>
+        <p class="status">Medical Cost Prediction uses data and machine learning to forecast healthcare expenses, including treatments and medications, by analyzing patient demographics, medical history, and lifestyle factors. It helps optimize budgeting and improve care decisions.</p>
+        <h1> How Medical Cost Prediction Helps?</h1>
+        <p class="status"> Optimizes healthcare budgets. Improves financial planning.
+Helps set accurate premiums.
+Predicts future healthcare needs.
+Enhances resource allocation.
+Supports better care decisions.
+Reduces unexpected medical costs.</p>
+        <p class="status"> And that is the main goal of our project !</p>
+        <iframe width="640" height="360" src="https://www.youtube.com/embed/cUgkWYeRsJk" title="Health Economic Evaluation Basics - Putting a price tag on health -" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div style="margin-bottom: 20px;"></div>
+        <p class="status">
+            For more information about How to Keep Medical Expenses Under Control, please check
+            <a href="https://www.healthcarebusinesstoday.com/7-tips-to-manage-your-medical-expenses-effectively/" target="_blank" style="color: #482d78; text-decoration: underline;">this link</a>.
+        </p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Medical Cost Prediction. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

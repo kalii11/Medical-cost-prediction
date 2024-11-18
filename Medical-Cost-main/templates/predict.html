@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="static/images/favicon-32x32.png" sizes="32x32">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Medical Cost Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0e1d2; /* Soft cream background */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Navbar */
+nav {
+            background-color: #e8d0af; /* Pink color for navbar */
+            color: #7c3088;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #8c5ba5; /* Initial color is white */
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #5e4f7e; /* Lighter pink on hover */
+            color: black; /* Text turns black on hover */
+            transform: translateY(-2px); /* Lift effect on hover */
+        }
+
+/* Bounce Animation for Navbar Links */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-5px);
+    }
+    60% {
+        transform: translateY(-3px);
+    }
+}
+
+/* Form Section */
+
+
+.form-section {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f0e1d2;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(179, 159, 134);
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+}
+.two_column_form {
+    display: flex;
+    gap: 20px;
+}
+
+.form-column {
+    flex: 1; /* Ensures both columns take equal space */
+}
+/* Fade-in Animation for Form Section */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.form-section h2 {
+    color: #7c3088; /* Purple for section title */
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+/* Form Section */
+.form-section {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #b992cf;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.form-section h2 {
+    color: #5e1c85;
+    margin-bottom: 1rem;
+}
+
+/* Inputs and Select Styling */
+.form-group {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #b58c4d;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 5px;
+    border: 1px solid #b39f86;
+    font-size: 1rem;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    box-shadow: 0 0 8px rgb(181, 140, 77);
+    outline: none;
+}
+
+/* Tooltip Styling */
+.help-tooltip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 0.5rem;
+    background-color: #e8d0af;
+    color: #7d46b3;
+    border: 1px solid #893aa5;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+.form-group input:hover + .help-tooltip,
+.form-group input:focus + .help-tooltip,
+.form-group select:hover + .help-tooltip,
+.form-group select:focus + .help-tooltip {
+    display: block;
+}
+
+/* Button Styling */
+.cta-button {
+    background-color: #602b8c;
+    color: #000000;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    animation: fadeIn 0.5s ease;
+}
+
+.cta-button:hover {
+    background-color: #e8d0af;
+    animation: bounce 0.3s ease-in-out;
+}
+
+/* Modal Pop-up with Fade-in */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(74, 20, 94);
+    justify-content: center;
+    align-items: center;
+    animation: fadeSlideDown 0.5s ease-in-out;
+}
+
+.modal-content {
+    background-color: #e8d0af;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #8a558f;
+    font-size: 1.2rem;
+}
+
+/* Fade-in and Slide-down Animation */
+@keyframes fadeSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Close button */
+.close-button {
+    background-color: #4a1c6e;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+    background-color: #5e378a;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #7c3088; /* Purple for label text */
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 5px;
+    border: 1px solid #8c5ba5; /* Light purple border */
+    font-size: 1rem;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+    box-shadow: 0 0 8px rgb(179, 159, 134); /* Focus color matching the theme */
+    outline: none;
+}
+
+/* Tooltip Styling */
+.help-tooltip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 0.5rem;
+    background-color: #8c5ba5; /* Light purple for tooltip background */
+    color: #f0e1d2; /* Soft cream text */
+    border: 1px solid #8c5ba5;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+.form-group input:hover + .help-tooltip,
+.form-group input:focus + .help-tooltip {
+    display: block;
+}
+
+/* CTA Button with Bounce Animation */
+.cta-button {
+    background-color: #b061d6; /* Purple CTA button */
+    color: #000000;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    animation: fadeIn 0.5s ease;
+}
+
+.cta-button:hover {
+    background-color: #9744e3; /* Darker purple on hover */
+    animation: bounce 0.3s ease-in-out;
+}
+
+/* Modal Pop-up with Fade-in and Slide-down */
+.modal {
+    display: none;  /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 80%;
+    max-width: 500px;
+}
+
+/* Fade-in and Slide-down Animation */
+@keyframes fadeSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background-color: #9744e3; /* Darker purple on hover */
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, #f0e1d2 0%, #c098dd 100%); /* Gradient of soft cream and purple */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+    width: 100%;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    position: relative;
+}
+
+/* Error Message with Fade-in Effect */
+.error-message {
+    color: #7c3088; /* Purple for error text */
+    background-color: #f0e1d2; /* Soft cream background */
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    text-align: center;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Text Styling for Malignant/Benign Status */
+.benign {
+    color: green;
+    font-weight: bold;
+}
+
+.malignant {
+    color: red;
+    font-weight: bold;
+}
+
+.menu-toggle {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    display: none; /* Hidden on desktop */
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Hide links by default on mobile */
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    /* Show the links when menu is toggled */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block; /* Show toggle icon on mobile */
+    }
+}
+
+    </style>
+    <script>
+        function toggleMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('active');
+}
+
+function submitForm() {
+    console.log("Submit button clicked.");  // Log to confirm function is called
+
+    const data = {
+        'age': parseInt(document.getElementById('age').value),
+        'sex': document.getElementById('sex').value.toLowerCase(),
+        'bmi': parseFloat(document.getElementById('bmi').value),
+        'children': parseInt(document.getElementById('children').value),
+        'smoker': document.getElementById('smoking').value,
+        'region': document.getElementById('region').value
+    };
+
+    console.log("Data to send:", data);  // Log data to check it’s correct
+
+    fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Response received:", data);  // Log response to confirm data received
+        const resultModal = document.getElementById('resultModal');
+        const resultContent = document.getElementById('resultContent');
+        resultContent.innerText = `-Prediction: ${data.prediction}  \n - Predicted Value: ${data.predicted_value}`;
+        resultModal.style.display = 'flex';  // Show modal with result
+    })
+    .catch(error => {
+        console.error('Error:', error);  // Log error if fetch fails
+        alert("An error occurred: " + error.message); // Alert user if there's an error
+    });
+}
+
+
+function closeModal() {
+    const resultModal = document.getElementById('resultModal');
+    resultModal.style.display = 'none';  // Hide the modal
+}
+    </script>
+
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Medical Cost Prediction<span>.</span></div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('predict') }}">Predict</a></li>
+            <li><a href="{{ url_for('aboutus_page') }}">Team</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="form-section">
+             <h2>Enter All Variables</h2>
+
+    <form id="predictForm">
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" value="30" required step="1">
+        </div>
+
+        <div class="form-group">
+            <label for="sex">Sex</label>
+            <select id="sex" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="bmi">BMI (Body Mass Index)</label>
+            <input type="number" id="bmi" value="25" required step="0.1">
+        </div>
+
+        <div class="form-group">
+            <label for="children">Number of Children</label>
+            <input type="number" id="children" value="0" required step="1">
+        </div>
+
+        <div class="form-group">
+            <label for="smoking">Smoking Status</label>
+            <select id="smoking" required>
+                <option value="yes">Smoker</option>
+                <option value="no">Non-Smoker</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="region">Region</label>
+            <select id="region" required>
+                <option value="northeast">North-East</option>
+                <option value="southeast">South-East</option>
+                <option value="northwest">North-West</option>
+                <option value="southwest">South-West</option>
+            </select>
+        </div>
+
+        <button type="button" class="cta-button" onclick="submitForm()">Predict</button>
+    </form>
+</section>
+    </main>
+
+    <!-- Modal Pop-up -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <p id="resultContent"></p>
+            <p id="probabilityContent"></p>
+            <button class="close-button" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+
+
+
+<footer>
+        <p>© 2024 Medical Cost Prediction. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

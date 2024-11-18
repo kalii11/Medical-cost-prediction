@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="icon" type="image/png" src="favicon-32x32.png" sizes="32x32">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Overall font style and background */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ecd1ae; /* Light background */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+nav {
+    background-color: #e8d0af; /* Light color for navbar */
+    color: #7c3088;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #8c5ba5; /* Accent color */
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: #5e4f7e; /* Hover color */
+    color: black; /* Text turns black on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.menu-toggle {
+    font-size: 24px;
+    cursor: pointer;
+    color: #8c5ba5;
+    display: none; /* Hidden on desktop */
+}
+
+.outer-container {
+    background-color: #e8d0af;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inner-container {
+    max-width: 1320px;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px auto;
+}
+
+.section-head-text {
+    background: linear-gradient(135deg, #e8d0af 0%, #d2b4e8 100%);
+    color: white;
+    text-align: center;
+    font-size: 35px;
+    font-weight: 700;
+    line-height: 48px;
+    color: #7c3088; /* Accent color */
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.section-subhead-text {
+    font-size: 25px;
+    color: #8c5ba5;
+    line-height: 35px;
+    max-width: 470px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.team-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.team-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 70px;
+    width: calc(30% - 60px);
+}
+
+.name {
+    font-size: 25px;
+    font-weight: 700;
+    color: #8c5ba5;
+    margin: 5px 0;
+}
+
+.position {
+    font-size: 20px;
+    font-weight: 700;
+    color: #c098dd;
+}
+
+.team-img {
+    width: 300px;
+    height: 300px;
+    border-radius: 60%; /* Circular image */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+}
+
+.social-media-links {
+    width: 125px;
+    display: flex;
+    justify-content: space-between;
+}
+
+footer {
+    background: linear-gradient(135deg, #e8d0af 0%, #c098dd 100%);
+    color: white;
+    text-align: center;
+    margin-top: auto;
+    width: 100%;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    padding: 10px 0;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .team-card {
+        width: calc(50% - 40px);
+        margin: 20px;
+    }
+
+    .section-head-text {
+        font-size: 28px;
+    }
+
+    .section-subhead-text {
+        font-size: 20px;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 500px) {
+    .outer-container {
+        padding: 10px 20px;
+    }
+
+    .section-head-text {
+        text-align: center;
+        font-size: 24px;
+    }
+
+    .team-card {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">Medical Cost Prediction<span>.</span></div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('predict') }}">Predict</a></li>
+            <li><a href="{{ url_for('aboutus_page') }}">Team</a></li>
+        </ul>
+    </nav>
+
+ <div class="outer-container">
+    <div class="inner-container">
+        <p class="section-head-text">Project Leaders</p>
+        <div class="responsive-container-block">
+            <div class="team-card-container">
+                <div class="responsive-cell-block team-card">
+                    <div class="img-wrapper">
+                        <img class="team-img" src="https://media.licdn.com/dms/image/v2/D4E03AQGMOWjZz2IIcg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1730209502625?e=1736380800&v=beta&t=1rwcAeK9A099i4svT_kjEzXBrRfiA-wV_UUFHHUR9Yc" alt="IMLOUL Douae">
+                    </div>
+                    <p class="name">IMLOUL Douae</p>
+                    <p class="position">Data Scientist </p>
+                    <div class="social-media-links">
+                        <a href="https://www.linkedin.com/in/douae-imloul-526772259/" target="_blank">
+                            <img src="https://img.icons8.com/?size=100&id=8808&format=png&color=4D4D4D" alt="LinkedIn" style="width: 24px; height: 24px;">
+                        </a>
+                        <a href="mailto:douaeimloul@gmail.com" target="_blank">
+                            <img src="https://workik-widget-assets.s3.amazonaws.com/widget-assets/images/gray-mail.svg" alt="Email">
+                        </a>
+                    </div>
+                </div>
+            <div class="responsive-cell-block team-card">
+                    <div class="img-wrapper">
+                        <img class="team-img" src="https://media.licdn.com/dms/image/v2/D5603AQGr_YJIeydIRA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1730756050957?e=1736380800&v=beta&t=897vJQqZQZ2VL9hSsxLMbLFVdcCdFU1WwXoh71dv3jU" alt="RACHIDI Widad">
+                    </div>
+                    <p class="name">RACHIDI Widad</p>
+                    <p class="position">Data Scientist</p>
+                    <div class="social-media-links">
+                        <a href="https://www.linkedin.com/in/widad-rachidi-18a63b283/" target="_blank">
+                            <img src="https://img.icons8.com/?size=100&id=8808&format=png&color=4D4D4D" alt="LinkedIn" style="width: 24px; height: 24px;">
+                        </a>
+                        <a href="mailto:widadrachidi438@gmail.com" target="_blank">
+                            <img src="https://workik-widget-assets.s3.amazonaws.com/widget-assets/images/gray-mail.svg" alt="Email">
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Medical Cost Prediction. All rights reserved.</p>
+    </footer>
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
